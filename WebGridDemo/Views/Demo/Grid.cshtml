@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core.Common;
+@model ProductPagingInfo
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<style>
+
+    .arrow {
+        display: inline-block;
+        height: 16px;
+        vertical-align: middle;
+        width: 16px;
+    }
+
+        .arrow.up {
+            background-image: url('/images/arrow-up.png');
+        }
+
+        .arrow.down {
+            background-image: url('/images/arrow-down.png');
+        }
+</style>
+
+<div class="container">
+    <h4>List of Products</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    ProductId
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>
+                        @product.ProductId
+                    </td>
+                    <td>
+                        @product.Name
+                    </td>
+                    <td>
+                        @product.Price
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3">
+                    @Html.PagedListPager((IPagedList)Model.Products,
+            page => Url.Action("Grid", new
+                {
+                    page = page
+            }),
+            PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
